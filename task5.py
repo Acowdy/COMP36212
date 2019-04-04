@@ -130,24 +130,32 @@ def plot_result(res, title=None):
     plt.legend()
     plt.title(title)
 
-part1_results = (
+part1_results = [
     ab2_method(500, 200, 0, 0, 0.1, 0.05, kc, 0.01, 50)
     for kc in [0.001, 0.005, 0.01]
-)
+]
 
 for res in part1_results:
-    plot_result(res, title=f'Task 5 Part 1: k_c={res.kc}')
+    plot_result(res, title=f'Task 5 part 1: k_c={res.kc}')
 
-part2_results = (
+part2_results = [
     ab2_method2(500, 200, 0, 0, 0.1, 0.05, kc, 0.01, 50)
     for kc in [0.001, 0.005, 0.01]
-)
+]
 
 for res in part2_results:
     plot_result(res, title=f'Task 5 Part 2: k_c={res.kc}')
 
 # Plot P
-
+plt.figure()
+for res in part1_results:
+    x_labels = [x*res.h for x in range(int(res.T/res.h + 1))]
+    plt.plot(x_labels, res.P, label=f'P of (2)-(5), k_c={res.kc}')
+for res in part2_results:
+    x_labels = [x*res.h for x in range(int(res.T/res.h + 1))]
+    plt.plot(x_labels, res.P, label=f'P of (2)-(4)+(8), k_c={res.kc}')
+plt.title('Concentrations of [P] as functions of time')
+plt.legend()
 
 # Show graphs
 plt.show()
